@@ -89,10 +89,6 @@ The KM-reconstructed datasets in `data/km_reconstructed/` were generated using o
 
 This web-based tool enables extraction of individual patient-level time-to-event data from published Kaplan-Meier survival curves using the Guyot algorithm.
 
-## Citation
-
-> Tanboga IH, et al. Percutaneous Left Atrial Appendage Closure Versus Oral Anticoagulation in Atrial Fibrillation: A Domain-Based Meta-Analysis With Harmonised Endpoint Reconstruction. *European Heart Journal* (submitted).
-
 ## License
 
 This repository contains analysis code and reconstructed datasets for academic research purposes. Individual trial data remain the property of the original investigators.
