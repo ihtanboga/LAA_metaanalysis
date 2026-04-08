@@ -1,0 +1,18 @@
+# study: champion | population: ITT | endpoint: Death from Cardiovascular Causes, Stroke, Systemic Embolism, or Non–Procedure-Related Bleeding
+arm,x,y
+device,0.006524,0.221111
+device,0.052077,0.707778
+device,0.079409,1.559446
+device,0.343618,3.871115
+device,0.525830,3.992782
+device,0.539496,4.357782
+device,0.680711,4.844449
+device,0.790039,5.696117
+device,1.546222,8.007786
+device,1.660105,8.859454
+device,1.960756,10.197789
+device,1.978977,10.684456
+device,2.338848,11.536123
+device,2.457286,12.387791
+device,2.598501,12.631125
+device,2.990258,14.942794

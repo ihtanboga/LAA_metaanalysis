@@ -1,0 +1,21 @@
+# study: OPTION | population: ITT | endpoint: Non–Procedure-Related Major Bleeding or Clinically Relevant Nonmajor Bleeding
+arm,x,y
+device,0.000000,0.129032
+device,0.097720,0.838710
+device,0.160596,1.304476
+device,0.273435,2.716011
+device,0.689155,3.421778
+device,0.706972,3.774662
+device,0.885138,3.774662
+device,0.926710,4.245174
+device,1.140509,4.362801
+device,1.235531,5.303825
+device,1.372125,5.774336
+device,1.389942,6.127220
+device,1.532475,6.127220
+device,1.645313,6.480103
+device,1.669069,6.950615
+device,1.954134,6.950615
+device,2.346099,7.538754
+device,2.387672,7.891638
+device,3.046886,8.479778
