@@ -84,28 +84,28 @@ eff_is_se <- tibble::tribble(
   ~study,               ~ev_device, ~n_device, ~ev_control, ~n_control,
   ~hr,    ~hr_lo, ~hr_hi,  ~effect_type, ~tier,
 
-  # CHAMPION-AF: IS=45 vs 27; SE=0 vs 1 → IS+SE = 45 vs 28
-  # HR from IS alone: 1.61 (1.00-2.59) — SE adds 0 vs 1
-  "CHAMPION-AF",         45, 1499,   28, 1501,
+  # CHAMPION-AF: IS=45 vs 27; SE=0 vs 2 → IS+SE = 45 vs 29
+  # HR from IS alone: 1.61 (1.00-2.59); SE ctrl=2 (Table S17)
+  "CHAMPION-AF",         45, 1499,   29, 1501,
    1.61,  1.00,   2.59,   "HR",         "T2",
 
-  # OPTION: IS+SE = 11 vs 11; HR 0.97 (0.42-2.25)
+  # OPTION: IS+SE = 11 vs 11; HR 0.97 (0.42-2.25) (Table S17)
   "OPTION",              11,  803,   11,  797,
    0.97,  0.42,   2.25,   "HR",         "T1",
 
-  # PRAGUE-17 4yr: IS=9, SE=0 → 9 vs IS=8, SE=1 → 9
-  # sHR for stroke+TIA = 1.14 — but includes TIA; pure IS+SE ≈ 1.00
-  "PRAGUE-17",            9,  201,    9,  201,
-   1.00,  0.41,   2.44,   "sHR",        "T2",
+  # PRAGUE-17 4yr: IS=13, SE=0 → 13 vs IS=10, SE=1 → 11
+  # sHR for all stroke excl TIA = 1.38 (0.63-3.03); proxy for IS+SE
+  "PRAGUE-17",           13,  201,   11,  201,
+   1.38,  0.63,   3.03,   "sHR",        "T2",
 
   # CLOSURE-AF: IS=18+SE=3 =21 vs IS=15+SE=1 =16
-  # Stroke+SE dRMST ~0.00; rate 2.9 vs 2.8/100PY → IRR ≈ 1.04
+  # HR derived from KM-reconstructed IPD (trial reports dRMST only)
   "CLOSURE-AF",          21,  446,   16,  442,
-   1.33,  0.69,   2.55,   "HR(derived)","T3",
+   1.30,  0.69,   2.45,   "HR(derived)","T3",
 
   # PROTECT-AF/PREVAIL 5yr pooled: IS+SE HR 1.71 (0.94-3.11)
-  # Combined events: PROTECT 26+PREVAIL 6 = 32 vs 10+1 = 11
-  "PROTECT-AF/PREVAIL",  32,  732,   11,  382,
+  # Events: PROTECT IS 24+SE 3 + PREVAIL IS 17+SE 1 = 45 vs 14 (Reddy 2017 Table 3/4)
+  "PROTECT-AF/PREVAIL",  45,  732,   14,  382,
    1.71,  0.94,   3.11,   "HR",         "T1"
 ) %>%
   mutate(
@@ -131,8 +131,8 @@ saf_nonproc_bleed <- tibble::tribble(
    0.44,  0.33,   0.59,   "HR",         "T1",
 
   # PRAGUE-17 4yr: non-proc major+CRNMB sHR 0.55 (0.31-0.97)
-  # Events estimated: ~24 vs ~42 from rates 3.4%/yr vs 5.9%/yr
-  "PRAGUE-17",           24,  201,   42,  201,
+  # 18 patients (23 events) vs 32 patients (40 events) — Table 2, 4yr
+  "PRAGUE-17",           18,  201,   32,  201,
    0.55,  0.31,   0.97,   "sHR",        "T2",
 
   # CLOSURE-AF: non-proc major bleeding = 70-18proc = 52 vs 61
@@ -142,8 +142,8 @@ saf_nonproc_bleed <- tibble::tribble(
    0.86,  0.60,   1.24,   "HR(derived)","T3",
 
   # PP-5yr: post-procedure (>7d) major bleeding HR 0.48 (0.32-0.71)
-  # Events approx: 40 vs 44 from rates 1.8 vs 3.6 per 100PY
-  "PROTECT-AF/PREVAIL",  40,  732,   44,  382,
+  # Events: 48 vs 51 (Reddy 2017 Table 4)
+  "PROTECT-AF/PREVAIL",  48,  732,   51,  382,
    0.48,  0.32,   0.71,   "HR",         "T1"
 ) %>%
   mutate(
@@ -159,12 +159,12 @@ proc_complications <- tibble::tribble(
   ~study,              ~events, ~n_attempted, ~rate_pct, ~deaths,
   ~pericardial, ~embolization, ~stroke,
 
-  "CHAMPION-AF",        10,  1403,  0.7,  0,   10,  0,  0,
+  "CHAMPION-AF",        14,  1408,  1.0,  0,    8,  0,  1,
   "OPTION",              8,   762,  1.0,  0,    2,  0,  0,
-  "PRAGUE-17",           9,   187,  4.8,  2,    4,  1,  0,
+  "PRAGUE-17",           9,   187,  4.8,  2,    3,  1,  0,
   "CLOSURE-AF",         24,   421,  5.7,  2,    5,  1,  0,
-  "PROTECT-AF",         36,   463,  7.7,  0,   22,  3,  5,
-  "PREVAIL",            11,   269,  4.2,  0,    1,  0,  1
+  "PROTECT-AF",         36,   449,  7.7,  0,   22,  3,  5,
+  "PREVAIL",            11,   265,  4.2,  0,    1,  2,  1
 )
 
 # -------------------------------------------------------------------------
@@ -184,15 +184,16 @@ saf_all_major_bleed <- tibble::tribble(
    0.77,  0.48,   1.24,   "T1",
 
   # PRAGUE-17: clinically relevant bleeding (all) sHR 0.75 (0.44-1.27)
-  "PRAGUE-17",           31,  201,   42,  201,
+  # 24 patients vs 32 patients (Table 2, 4yr)
+  "PRAGUE-17",           24,  201,   32,  201,
    0.75,  0.44,   1.27,   "T2",
 
   # CLOSURE-AF: major bleeding 70 vs 61
   "CLOSURE-AF",          70,  446,   61,  442,
    1.16,  0.83,   1.62,   "T2",
 
-  # PP-5yr: all major bleeding HR 0.91 (0.64-1.29)
-  "PROTECT-AF/PREVAIL",  58,  732,   32,  382,
+  # PP-5yr: all major bleeding HR 0.91 (0.64-1.29) — Reddy 2017 Table 4
+  "PROTECT-AF/PREVAIL",  85,  732,   50,  382,
    0.91,  0.64,   1.29,   "T1"
 ) %>%
   mutate(
@@ -216,16 +217,16 @@ sec_acm <- tibble::tribble(
   "OPTION",              29,  803,   34,  797,
    0.83,  0.51,   1.36,   "T1",
 
-  # PRAGUE-17 4yr: HR 0.81 (0.54-1.22)
-  "PRAGUE-17",           29,  201,   35,  201,
+  # PRAGUE-17 4yr: HR 0.81 (0.54-1.22) — 42 vs 53 deaths (4yr text)
+  "PRAGUE-17",           42,  201,   53,  201,
    0.81,  0.54,   1.22,   "T1",
 
   # CLOSURE-AF: 155 vs 141
   "CLOSURE-AF",         155,  446,  141,  442,
    1.11,  0.89,   1.39,   "T2",
 
-  # PP-5yr: HR 0.73 (0.54-0.98)
-  "PROTECT-AF/PREVAIL", 146,  732,   88,  382,
+  # PP-5yr: HR 0.73 (0.54-0.98) — 106 vs 73 deaths (Reddy 2017 Table 4)
+  "PROTECT-AF/PREVAIL", 106,  732,   73,  382,
    0.73,  0.54,   0.98,   "T1"
 ) %>%
   mutate(
@@ -241,24 +242,24 @@ sec_cvdeath <- tibble::tribble(
   ~study,               ~ev_device, ~n_device, ~ev_control, ~n_control,
   ~hr,    ~hr_lo, ~hr_hi,  ~tier,
 
-  # CHAMPION-AF: CV death 2.7% vs 2.7%; HR 1.01 (0.64-1.59)
-  "CHAMPION-AF",         40, 1499,   41, 1501,
+  # CHAMPION-AF: CV/unexpl death 38 vs 36; HR 1.01 (0.64-1.59) — Table S17
+  "CHAMPION-AF",         38, 1499,   36, 1501,
    1.01,  0.64,   1.59,   "T1",
 
-  # OPTION: ~20 vs ~23
-  "OPTION",              20,  803,   23,  797,
-   0.85,  0.47,   1.55,   "T2",
+  # OPTION: 15 vs 15; HR 0.97 (0.48-1.99) — Table S17
+  "OPTION",              15,  803,   15,  797,
+   0.97,  0.48,   1.99,   "T1",
 
-  # PRAGUE-17: sHR 0.68 (0.39-1.20)
-  "PRAGUE-17",           21,  201,   30,  201,
+  # PRAGUE-17: sHR 0.68 (0.39-1.20) — 20 vs 30 (4yr Table 2)
+  "PRAGUE-17",           20,  201,   30,  201,
    0.68,  0.39,   1.20,   "T1",
 
   # CLOSURE-AF: CV/unexplained death 99 vs 81
   "CLOSURE-AF",          99,  446,   81,  442,
    1.24,  0.93,   1.66,   "T2",
 
-  # PP-5yr: CV/unexplained death HR 0.59 (0.37-0.94)
-  "PROTECT-AF/PREVAIL",  39,  732,   35,  382,
+  # PP-5yr: CV/unexplained death HR 0.59 (0.37-0.94) — 39 vs 33 (Reddy 2017 Table 4)
+  "PROTECT-AF/PREVAIL",  39,  732,   33,  382,
    0.59,  0.37,   0.94,   "T1"
 ) %>%
   mutate(
@@ -282,16 +283,16 @@ sec_hemstroke <- tibble::tribble(
   "OPTION",               3,  803,    3,  797,
    0.98,  0.20,   4.88,   "T1",
 
-  # PRAGUE-17: 0 vs 1
-  "PRAGUE-17",            0,  201,    1,  201,
+  # PRAGUE-17: 1 vs 2 (4yr text: 1 hem LAAC, 2 hem DOAC)
+  "PRAGUE-17",            1,  201,    2,  201,
    NA,    NA,     NA,      "T1",
 
   # CLOSURE-AF: 10 vs 13
   "CLOSURE-AF",          10,  446,   13,  442,
    0.77,  0.34,   1.75,   "T2",
 
-  # PP-5yr: HR 0.20 (0.07-0.56)
-  "PROTECT-AF/PREVAIL",   4,  732,   16,  382,
+  # PP-5yr: HR 0.20 (0.07-0.56) — 5 vs 13 (Reddy 2017 Table 3)
+  "PROTECT-AF/PREVAIL",   5,  732,   13,  382,
    0.20,  0.07,   0.56,   "T1"
 ) %>%
   mutate(
@@ -307,27 +308,26 @@ sec_anystroke_se <- tibble::tribble(
   ~study,               ~ev_device, ~n_device, ~ev_control, ~n_control,
   ~hr,    ~hr_lo, ~hr_hi,  ~tier,
 
-  # CHAMPION-AF: all stroke 52 vs 35; SE 0 vs 1 → 52 vs 36
-  # HR for all strokes = 1.46 (0.94-2.27)
-  "CHAMPION-AF",         52, 1499,   36, 1501,
+  # CHAMPION-AF: all stroke 50 + SE 0 = 50 vs stroke 33 + SE 2 = 35
+  # HR for all strokes = 1.46 (0.94-2.27) — Table S17
+  "CHAMPION-AF",         50, 1499,   35, 1501,
    1.46,  0.94,   2.27,   "T1",
 
   # OPTION: stroke+SE 14 vs 16; HR 0.85 (0.42-1.75)
   "OPTION",              14,  803,   16,  797,
    0.85,  0.42,   1.75,   "T1",
 
-  # PRAGUE-17: all stroke+TIA sHR 1.14 (0.56-2.30)
-  # (includes TIA; approximate for stroke+SE)
-  "PRAGUE-17",           10,  201,   10,  201,
+  # PRAGUE-17 4yr: all stroke excl TIA 14 + SE 0 = 14 vs 12 + SE 1 = 13
+  # sHR 1.14 (0.56-2.30) for stroke/TIA — proxy
+  "PRAGUE-17",           14,  201,   13,  201,
    1.14,  0.56,   2.30,   "T2",
 
-  # CLOSURE-AF: stroke+SE = 27+3 vs 27+1 = 30 vs 28
-  # dRMST = -0.00 (-0.19 to 0.19)
-  "CLOSURE-AF",          30,  446,   28,  442,
+  # CLOSURE-AF: stroke 27 + SE 3 = first-event composite 29 vs stroke 27 + SE 1 = 28
+  "CLOSURE-AF",          29,  446,   28,  442,
    1.08,  0.64,   1.81,   "T2",
 
-  # PP-5yr: all stroke/SE HR 0.96 (0.60-1.54)
-  "PROTECT-AF/PREVAIL",  46,  732,   25,  382,
+  # PP-5yr: all stroke/SE HR 0.96 (0.60-1.54) — 49 vs 27 (Reddy 2017 Table 4)
+  "PROTECT-AF/PREVAIL",  49,  732,   27,  382,
    0.96,  0.60,   1.54,   "T1"
 ) %>%
   mutate(
@@ -347,11 +347,13 @@ sec_is_alone <- tibble::tribble(
    1.61,  1.00,   2.59,   "T1",
   "OPTION",               9,  803,   10,  797,
    0.88,  0.36,   2.17,   "T1",
-  "PRAGUE-17",            9,  201,    8,  201,
+  # PRAGUE-17 4yr: IS 13 vs 10 (excl TIA)
+  "PRAGUE-17",           13,  201,   10,  201,
    1.13,  0.44,   2.93,   "T2",
   "CLOSURE-AF",          18,  446,   15,  442,
    1.21,  0.61,   2.41,   "T2",
-  "PROTECT-AF/PREVAIL",  29,  732,   11,  382,
+  # PP-5yr: IS 41 vs 14 (Reddy 2017 Table 3)
+  "PROTECT-AF/PREVAIL",  41,  732,   14,  382,
    1.40,  0.76,   2.59,   "T1"
 ) %>%
   mutate(
