@@ -4,13 +4,15 @@ A domain-based meta-analysis with harmonised endpoint reconstruction evaluating 
 
 ## Key Findings
 
-| Endpoint | Contemporary Pool (k=3) | Direction |
-|---|---|---|
-| Ischaemic stroke + SE | RR 1.33 (0.88-2.02) | Numerically higher with LAAC |
-| Non-procedural bleeding | HR 0.52 (0.44-0.62) | **Significantly lower with LAAC** |
-| All major bleeding | HR 0.85 (0.64-1.13) | Numerically lower with LAAC |
-| All-cause death | RR 0.95 (0.78-1.16) | Neutral |
-| Haemorrhagic stroke | HR 0.57 (0.27-1.19) | Numerically lower with LAAC |
+| Endpoint | Contemporary Pool (k=3) | All Trials (k=5) | Direction |
+|---|---|---|---|
+| Ischaemic stroke + SE | RR 1.35 (0.77–2.35) | RR 1.41 (1.11–1.78)* | **Significantly higher with LAAC (All Trials)** |
+| Non-procedural bleeding | HR 0.51 (0.37–0.70)* | HR 0.56 (0.40–0.76)* | **Significantly lower with LAAC** |
+| All major bleeding | HR 0.85 (0.64–1.13) | HR 0.93 (0.76–1.14) | Neutral |
+| All-cause death | RR 0.91 (0.60–1.38) | RR 0.92 (0.74–1.15) | Neutral |
+| Haemorrhagic stroke | HR 0.97 (0.85–1.10) | HR 0.58 (0.17–1.97) | Neutral (DOAC-era: no difference) |
+
+\* P < 0.05
 
 ## Included Trials
 
@@ -18,9 +20,9 @@ A domain-based meta-analysis with harmonised endpoint reconstruction evaluating 
 |---|---|---|---|---|
 | CHAMPION-AF | 3,000 | NOAC | Watchman FLX | 3.0 yr |
 | OPTION | 1,600 | OAC (95% DOAC) | Watchman FLX | 3.0 yr |
-| PRAGUE-17 | 402 | DOAC (96% apixaban) | Amulet/Watchman | 3.5 yr |
-| CLOSURE-AF | 888 | Best medical care | Mixed | 3.0 yr |
-| PROTECT-AF/PREVAIL | 1,114 | Warfarin | Watchman Gen 1 | 5.0 yr |
+| PRAGUE-17 | 402 | DOAC (96% apixaban) | Amulet (61%)/Watchman (36%) | 3.5 yr (median) |
+| CLOSURE-AF | 888 | Best medical care (85% DOAC) | Watchman/FLX/Amulet | 3.0 yr (median) |
+| PROTECT-AF/PREVAIL | 1,114 | Warfarin | Watchman Gen 1 | 5.0 yr (max) |
 
 **Total: 7,004 patients across 6 RCTs (5 analysis units)**
 
